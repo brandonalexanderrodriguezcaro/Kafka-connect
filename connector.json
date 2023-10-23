@@ -1,0 +1,35 @@
+{
+    "name": "SQL",
+    "config": {
+        "snapshot.mode": "initial",
+        "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+        "database.hostname": "fisdb.database.windows.net",
+        "database.port": "1433",
+        "database.user": "debezium-wwi",
+        "database.password": "Abcd1234!",
+        "database.names": "BikeStoreSampleDB",
+        "topic.prefix": "cdc", 
+        "table.include.list": "sales.customers",
+        "database.encrypt": "true",
+        "database.trustServerCertificate": "true",
+        "tasks.max": "1",
+        "decimal.handling.mode": "string",
+        "schema.history.internal":"io.debezium.storage.azure.blob.history.AzureBlobSchemaHistory",
+        "schema.history.internal.azure.storage.account.connectionstring":"DefaultEndpointsProtocol=https;AccountName=schemahistory;AccountKey=Dxy6EDSvdQ779hCy3mJpS3BwTQz+9OKoiOlncxlOvA+rg3Yb2sjXikNO+DArzNktkKtF/r6YC2Sc+AStf9zKrg==;EndpointSuffix=core.windows.net",
+        "schema.history.internal.azure.storage.account.container.name":"bikes-sales-customer",
+        "schema.history.internal.azure.storage.blob.name":"schemahistoryfile",
+        "transforms": "Reroute",
+        "transforms.Reroute.type": "io.debezium.transforms.ByLogicalTableRouter",
+        "transforms.Reroute.topic.regex": "(.*)",
+        "transforms.Reroute.topic.replacement": "wwi",
+        "retries":"10",
+        "errors.retry.timeout":"600000",
+        "errors.retry.delay.max.ms":"30000",
+        "errors.log.enable":"true",
+        "errors.log.include.messages":"true",
+        "errors.tolerance":"all"
+    }
+}
+http://localhost:8083/connectors/
+Accept: application/json
+Content-Type: application/json
